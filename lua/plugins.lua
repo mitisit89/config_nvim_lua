@@ -39,7 +39,6 @@ return require('packer').startup(function()
     use 'nvim-treesitter/nvim-treesitter'
     -- Collection of configurations for built-in LSP client
     use 'neovim/nvim-lspconfig'
-    use 'williamboman/nvim-lsp-installer'
     -- Автодополнялка
     use 'hrsh7th/nvim-cmp'
     use 'hrsh7th/cmp-nvim-lsp'
