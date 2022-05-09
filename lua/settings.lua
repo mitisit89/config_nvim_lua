@@ -41,9 +41,9 @@ cmd'colorscheme onedark'
 -----------------------------------------------------------
 -- Табы и отступы
 -----------------------------------------------------------
-cmd([[
-filetype indent plugin on
-]])
+
+opt.filetype="plugin"
+
 opt.expandtab = true      -- use spaces instead of tabs
 opt.shiftwidth = 4        -- shift 4 spaces when tab
 opt.tabstop = 4           -- 1 tab == 4 spaces
@@ -73,96 +73,4 @@ autocmd TextYankPost * silent! lua vim.highlight.on_yank{higroup="IncSearch", ti
 augroup end
 ]], false)
 
------------------------------------------------------------
--- Установки для плагинов
------------------------------------------------------------
- require'nvim-treesitter.configs'.setup {
-    highlight = {
-      enable = true,
-      additional_vim_regex_highlighting = false,
-    },
-  }
--- Nvim TreeSetter- better syntax highlighting 
--- Use TSinstall <lang>  to add addition syntax highlighting
 
--- LSP settings
-local lsp_installer = require("nvim-lsp-installer")
-lsp_installer.on_server_ready(function(server)
-    local opts = {}
-    if server.name == "sumneko_lua" then
-        -- only apply these settings for the "sumneko_lua" server
-        opts.settings = {
-            Lua = {
-                diagnostics = {
-                    -- Get the language server to recognize the 'vim', 'use' global
-                   globals = {'vim', 'use'},
-                },
-                workspace = {
-                    -- Make the server aware of Neovim runtime files
-                    library = vim.api.nvim_get_runtime_file("", true),
-                },
-                -- Do not send telemetry data containing a randomized but unique identifier
-                telemetry = {
-                    enable = false,
-                },
-            },
-        }
-    end
-    server:setup(opts)
-end)
-
-
--- nvim-cmp supports additional completion capabilities
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
-vim.o.completeopt = 'menuone,noselect'
--- luasnip setup
-local luasnip = require('luasnip')
--- nvim-cmp setup
-local cmp = require 'cmp'
-cmp.setup {
-  completion = {
-    autocomplete = false
-  },
-   snippet = {
-        expand = function(args)
-            luasnip.lsp_expand(args.body)
-        end,
-    },
-  mapping = {
-    ['<C-p>'] = cmp.mapping.select_prev_item(),
-    ['<C-n>'] = cmp.mapping.select_next_item(),
-    ['<C-d>'] = cmp.mapping.scroll_docs(-4),
-    ['<C-f>'] = cmp.mapping.scroll_docs(4),
-    ['<C-Space>'] = cmp.mapping.complete(),
-    ['<C-e>'] = cmp.mapping.close(),
-    ['<CR>'] = cmp.mapping.confirm {
-      behavior = cmp.ConfirmBehavior.Replace,
-      select = true,
-    },
-    ['<Tab>'] = function(fallback)
-      if vim.fn.pumvisible() == 1 then
-        vim.fn.feedkeys(vim.api.nvim_replace_termcodes('<C-n>', true, true, true), 'n')
-      elseif luasnip.expand_or_jumpable() then
-        vim.fn.feedkeys(vim.api.nvim_replace_termcodes('<Plug>luasnip-expand-or-jump', true, true, true), '')
-      else
-        fallback()
-      end
-    end,
-    ['<S-Tab>'] = function(fallback)
-      if vim.fn.pumvisible() == 1 then
-        vim.fn.feedkeys(vim.api.nvim_replace_termcodes('<C-p>', true, true, true), 'n')
-      elseif luasnip.jumpable(-1) then
-        vim.fn.feedkeys(vim.api.nvim_replace_termcodes('<Plug>luasnip-jump-prev', true, true, true), '')
-      else
-        fallback()
-      end
-    end,
-  },
-   sources = {
-        { name = 'nvim_lsp' },
-        { name = 'luasnip' },
-        { name = 'path' },
-        { name = 'buffer' },
-},
-} 

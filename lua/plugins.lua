@@ -12,15 +12,9 @@ return require('packer').startup(function()
     use 'joshdick/onedark.vim'
     --- Информационная строка внизу
     use { 'nvim-lualine/lualine.nvim',
-    requires = {'kyazdani42/nvim-web-devicons', opt = true},
-    config = function()
-        require('lualine').setup()
-    end, }
+    requires = {'kyazdani42/nvim-web-devicons', opt = true}},
     -- Табы вверху
-    use {'akinsho/bufferline.nvim', requires = 'kyazdani42/nvim-web-devicons',
-    config = function()
-        require("bufferline").setup{}
-    end, }
+    use {'akinsho/bufferline.nvim'},
 
 
     -----------------------------------------------------------
@@ -28,14 +22,12 @@ return require('packer').startup(function()
     -----------------------------------------------------------
     -- Файловый менеджер
     use { 'kyazdani42/nvim-tree.lua',
-    requires = 'kyazdani42/nvim-web-devicons',
-    config = function() require'nvim-tree'.setup {} end, }
+    requires = 'kyazdani42/nvim-web-devicons'},
     -- Навигация внутри файла по классам и функциям
     use 'majutsushi/tagbar'
     -- Замена fzf и ack
     use { 'nvim-telescope/telescope.nvim',
-    requires = { {'nvim-lua/plenary.nvim'} },
-    config = function() require'telescope'.setup {} end, }
+    requires = { {'nvim-lua/plenary.nvim'} }},
 
 
     -----------------------------------------------------------
@@ -57,8 +49,6 @@ return require('packer').startup(function()
     use 'hrsh7th/cmp-path'
     -- Snippets plugin
     use 'L3MON4D3/LuaSnip'
-
-
 
     -----------------------------------------------------------
     -- PYTHON
