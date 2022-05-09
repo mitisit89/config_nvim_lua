@@ -12,6 +12,7 @@ require('keymaps')
 require("bufferline").setup{}
 require('lualine').setup()
 require'telescope'.setup {} 
+require'nvim-tree'.setup {}
  require'nvim-treesitter.configs'.setup {
     highlight = {
       enable = true,
