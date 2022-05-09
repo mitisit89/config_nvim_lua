@@ -43,7 +43,6 @@ cmd'colorscheme onedark'
 -----------------------------------------------------------
 cmd([[
 filetype indent plugin on
-syntax enable
 ]])
 opt.expandtab = true      -- use spaces instead of tabs
 opt.shiftwidth = 4        -- shift 4 spaces when tab
@@ -77,6 +76,15 @@ augroup end
 -----------------------------------------------------------
 -- Установки для плагинов
 -----------------------------------------------------------
+ require'nvim-treesitter.configs'.setup {
+    highlight = {
+      enable = true,
+      additional_vim_regex_highlighting = false,
+    },
+  }
+-- Nvim TreeSetter- better syntax highlighting 
+-- Use TSinstall <lang>  to add addition syntax highlighting
+
 -- LSP settings
 local lsp_installer = require("nvim-lsp-installer")
 lsp_installer.on_server_ready(function(server)
